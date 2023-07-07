@@ -1,0 +1,55 @@
+{
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        {
+          "type": "rating",
+          "name": "nps_score",
+          "title": "Em uma nota de 0 a 10, o quanto você indicaria essa experiência para um amigo?",
+          "isRequired": true,
+          "rateMin": 0,
+          "rateMax": 10,
+          "minRateDescription": "(Pouco provável)",
+          "maxRateDescription": "(Muito provável)"
+        },
+        {
+          "type": "checkbox",
+          "name": "promoter_features",
+          "visibleIf": "{nps_score} >= 9",
+          "title": "O que você mais gostou?",
+          "isRequired": true,
+          "validators": [
+            {
+              "type": "answercount",
+              "text": "Por favor, selecione até duas funcionalidades.",
+              "maxCount": 2
+            }
+          ],
+          "hasOther": true,
+          "choices": [
+            "Desempenho",
+            "Estabilidade",
+            "Interface de Usuário"
+          ],
+          "otherText": "Outra:",
+          "otherErrorText": "Por favor, descreva uma funcionalidade.",
+          "colCount": 2
+        },
+        {
+          "type": "comment",
+          "name": "passive_experience",
+          "visibleIf": "{nps_score} > 6  and {nps_score} < 9",
+          "title": "Gostaria de descrever o motivo desta sua avaliação?"
+        },
+        {
+          "type": "comment",
+          "name": "disappointed_experience",
+          "visibleIf": "{nps_score} < 7",
+          "title": "O que você sente falta ou te desaponta em relação à sua experiência conosco?"
+        }
+      ]
+    }
+  ],
+  "showQuestionNumbers": "off"
+}
