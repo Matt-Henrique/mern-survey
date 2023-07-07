@@ -85,11 +85,11 @@ const getResponse = async (req, res) => {
 }
 
 const getResponses = async (_req, res) => {
-  const survies = await Response.find({})
-  if (!survies.length) {
+  const responses = await Response.find({})
+  if (!responses.length) {
     return res.status(204).json({ success: true })
   }
-  return res.status(200).json({ success: true, data: survies })
+  return res.status(200).json({ success: true, data: responses })
 }
 
 export {
