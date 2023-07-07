@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  api-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: api-server
+    command: /usr/src/app/node_modules/.bin/nodemon server.js
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5000:5000"
+    env_file: ./server/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - mern-app
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - mern-app
+  react-app:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image:  react-app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./client/:/usr/app:delegated
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-app
+    depends_on:
+      - api-server
+networks:
+  mern-app:
+    driver: bridge
+volumes:
+    mongodb:
+    node_modules:
+    web-root:
+      driver: local
